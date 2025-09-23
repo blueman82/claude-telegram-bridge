@@ -21,7 +21,7 @@ print_warning() { echo -e "${YELLOW}[!]${NC} $1"; }
 # Create macOS app bundle for auto-start functionality
 create_telegram_app_bundle() {
     local app_path="$HOME/Applications/TelegramListener.app"
-    local script_path="$HOME/.claude/telegram_listener_simple.py"
+    local script_path="$HOME/.claude/telegram_listener.py"
     local project_dir="$(pwd)"
 
     print_status "Creating TelegramListener app bundle..."
