@@ -1146,5 +1146,13 @@
     "permission_mode": "bypassPermissions",
     "hook_event_name": "Stop",
     "stop_hook_active": false
+  },
+  {
+    "session_id": "c9d35e50-ee32-484b-beff-2a22cf6b9ea5",
+    "transcript_path": "/Users/harrison/.claude/projects/-Users-harrison-Documents-Github-claude-text/c9d35e50-ee32-484b-beff-2a22cf6b9ea5.jsonl",
+    "cwd": "/Users/harrison/Documents/Github/claude_text",
+    "permission_mode": "bypassPermissions",
+    "hook_event_name": "Stop",
+    "stop_hook_active": true
   }
 ]
