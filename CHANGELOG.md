@@ -3,10 +3,11 @@
 ## [1.1.3] - 2024-09-23
 
 ### Enhanced
-- **Documentation clarity** - Improved SETUP.md usage instructions
-  - Added clear distinction between terminal/bash shell usage and Claude Code session usage
+- **Documentation clarity** - Improved usage instructions across all documentation
+  - Updated both SETUP.md and README.md with clear distinction between terminal/bash shell and Claude Code session usage
   - Documented required `!` prefix for commands when inside active Claude Code sessions
   - Enhanced examples for `show-telegram` and `show-changes` commands with both contexts
+  - Added helpful notes in system status section for consistent user experience
 
 ## [1.1.2] - 2024-09-23
 
