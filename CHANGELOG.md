@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.1.6] - 2025-09-23
+
+### Added
+- **Auto-start functionality via Login Items** - macOS native auto-start implementation
+  - Created `create_telegram_app_bundle()` function to generate TelegramListener.app bundle
+  - Added `add_to_login_items()` and `remove_from_login_items()` for macOS Login Items management
+  - Integrated auto-start choice into setup.sh with user prompt (auto vs manual)
+  - App bundle approach bypasses LaunchAgent security restrictions
+  - Background app runs invisibly with proper macOS integration
+  - **TDD Validation**: 5/5 tests passed proving Login Items automation viability
+
+### Enhanced
+- **Setup script modularization** - Refactored for maintainability and size compliance
+  - Split startup configuration into dedicated functions (400+ line size limit compliance)
+  - Created `configure_telegram_startup()`, `setup_auto_start()`, `setup_manual_start()`
+  - Added `start_listener_via_app()` and `start_listener_manually()` functions
+  - Improved user experience with clear choice between auto-start and manual modes
+  - Fallback logic: app bundle failure gracefully falls back to manual start
+
+### Fixed
+- **File size compliance** - Refactored setup.sh to stay under 400-line limit
+  - Extracted inline startup logic into modular functions
+  - Maintained all functionality while improving code organization
+  - Each new function under 100 lines (compliance with function size limits)
+
 ## [1.1.5] - 2025-09-23
 
 ### Added
