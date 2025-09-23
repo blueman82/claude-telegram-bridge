@@ -143,6 +143,10 @@ telegram-status
 
 # View conversation history
 show-telegram <session_id>
+
+# View git changes for a session
+show-changes <session_id>
+show-changes <session_id> --full  # Full diff
 ```
 
 **Important:** After running setup.sh, reload your shell:
