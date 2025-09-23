@@ -128,11 +128,125 @@ def get_llm_completion_message():
     return random.choice(messages)
 
 
+def get_recent_changes(cwd, since_time=None):
+    """Get git changes since the session started or last commit."""
+    try:
+        # Check if this is a git repository
+        git_check = subprocess.run(
+            ["git", "rev-parse", "--git-dir"],
+            cwd=cwd,
+            capture_output=True,
+            text=True
+        )
+        if git_check.returncode != 0:
+            return None
+
+        # Get git status for staged/unstaged changes
+        status_result = subprocess.run(
+            ["git", "status", "--porcelain"],
+            cwd=cwd,
+            capture_output=True,
+            text=True
+        )
+
+        # Get recent commits (last 10) if no working changes
+        commits_result = subprocess.run(
+            ["git", "log", "--oneline", "-10", "--since=1 hour ago"],
+            cwd=cwd,
+            capture_output=True,
+            text=True
+        )
+
+        changes = []
+
+        # Parse git status output
+        if status_result.returncode == 0 and status_result.stdout.strip():
+            status_lines = status_result.stdout.strip().split('\n')
+            for line in status_lines:
+                if len(line) >= 3:
+                    status = line[:2]
+                    filename = line[3:]
+
+                    # Determine change type
+                    if 'M' in status:
+                        change_type = "✏️"
+                        action = "modified"
+                    elif 'A' in status:
+                        change_type = "➕"
+                        action = "added"
+                    elif 'D' in status:
+                        change_type = "➖"
+                        action = "deleted"
+                    elif '?' in status:
+                        change_type = "📄"
+                        action = "untracked"
+                    else:
+                        change_type = "📝"
+                        action = "changed"
+
+                    changes.append(f"{change_type} {filename} ({action})")
+
+        # If no working changes but recent commits, show those
+        elif commits_result.returncode == 0 and commits_result.stdout.strip():
+            commit_lines = commits_result.stdout.strip().split('\n')[:3]  # Max 3 commits
+            for commit_line in commit_lines:
+                if commit_line.strip():
+                    commit_hash = commit_line.split()[0]
+                    commit_msg = ' '.join(commit_line.split()[1:])[:50]
+                    changes.append(f"📦 {commit_hash}: {commit_msg}")
+
+        if not changes:
+            return None
+
+        # Limit to first 5 changes to avoid long messages
+        if len(changes) > 5:
+            display_changes = changes[:5]
+            display_changes.append(f"... and {len(changes) - 5} more changes")
+        else:
+            display_changes = changes
+
+        return '\n'.join(display_changes)
+
+    except Exception:
+        return None
+
+
 def generate_session_id(session_id, project):
     """Generate a simple 6-character session ID"""
     combined = f"{session_id}-{project}"
     hash_obj = hashlib.md5(combined.encode())
     return hash_obj.hexdigest()[:6]
+
+
+def cleanup_old_sessions(max_age_days=30):
+    """Clean up sessions older than max_age_days to prevent unlimited growth."""
+    try:
+        sessions_file = Path.home() / '.claude' / '.sessions'
+        if not sessions_file.exists():
+            return
+
+        # Load existing sessions
+        with sessions_file.open('r') as f:
+            sessions = json.load(f)
+
+        # Calculate cutoff time (30 days ago)
+        cutoff_time = int(time.time()) - (max_age_days * 24 * 60 * 60)
+
+        # Filter out old sessions
+        original_count = len(sessions)
+        sessions = {
+            session_id: session_data
+            for session_id, session_data in sessions.items()
+            if session_data.get('timestamp', 0) > cutoff_time
+        }
+
+        # Only write back if we actually removed sessions
+        if len(sessions) < original_count:
+            with sessions_file.open('w') as f:
+                json.dump(sessions, f, indent=2)
+
+    except Exception:
+        pass  # Fail silently
 
 
 def save_session_mapping(short_session_id, real_session_id, cwd):
@@ -149,16 +263,28 @@ def save_session_mapping(short_session_id, real_session_id, cwd):
             except:
                 pass
 
-        # Update mapping
+        current_time = int(time.time())
+
+        # Update mapping - preserve start_time if session exists, otherwise set it
+        if short_session_id in sessions:
+            start_time = sessions[short_session_id].get("start_time", current_time)
+        else:
+            start_time = current_time
+
         sessions[short_session_id] = {
             "session_id": real_session_id,
             "cwd": cwd,
-            "timestamp": int(time.time())
+            "timestamp": current_time,
+            "start_time": start_time
         }
 
         # Save back
         with open(sessions_file, 'w') as f:
             json.dump(sessions, f, indent=2)
+
+        # Occasionally clean up old sessions (10% chance)
+        if random.randint(1, 10) == 1:
+            cleanup_old_sessions()
     except:
         pass  # Fail silently
 
@@ -301,6 +427,11 @@ def send_telegram_notification(input_data=None):
         # Send Claude's latest response with session ID (using HTML)
         timestamp = datetime.now().strftime("%H:%M")
         summary = f"🤖 <b>Session {short_session_id}</b> - {project} ({timestamp})\n\n"
+
+        # Add git changes if available
+        git_changes = get_recent_changes(cwd)
+        if git_changes:
+            summary += f"📂 <b>Recent changes:</b>\n{git_changes}\n\n"
 
         # Get session data and extract Claude's latest response
         session_data = input_data or {}
