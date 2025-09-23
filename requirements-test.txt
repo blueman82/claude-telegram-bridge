@@ -1,0 +1,4 @@
+# Testing requirements for Claude-Telegram Bridge
+pytest>=8.0.0
+requests>=2.32.0
+python-dotenv>=1.0.0
