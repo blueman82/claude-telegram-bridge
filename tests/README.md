@@ -44,12 +44,14 @@ pytest -v tests/
 - **Session Management** - ID generation, mapping persistence
 - **Message Parsing** - Telegram reply format validation
 - **Git Integration** - Change detection with subprocess mocking
+- **Login Items Automation** - macOS auto-start capability testing
 - **Error Handling** - Graceful failures and edge cases
 
 ## Test Structure
 
 - `test_stop_hook.py` - Core stop hook functionality
 - `test_git_integration.py` - Git change detection with mocks
+- `test_login_items.py` - Login Items automation verification (TDD)
 - Simple built-in test runner (no external dependencies)
 - Comprehensive assertions and edge case coverage
 
