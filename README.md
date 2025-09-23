@@ -36,8 +36,9 @@ Terminal: [Session continues automatically with your question]
 ### Prerequisites
 
 - Python 3.7+
-- Claude Code CLI
+- Claude Code CLI installed and configured
 - Telegram account
+- macOS or Linux (Windows support coming soon)
 
 ### Installation
 
@@ -52,12 +53,20 @@ Terminal: [Session continues automatically with your question]
    - Use `/newbot` command
    - Save your API token
 
-3. **Run setup script** (coming soon)
+3. **Run the automated setup script**
    ```bash
+   chmod +x setup.sh
    ./setup.sh
    ```
 
-   Or follow [manual setup instructions](SETUP.md)
+   The script will:
+   - Install Python dependencies
+   - Copy scripts to correct locations
+   - Configure your Telegram bot
+   - Add convenient aliases to your shell
+   - Start the background listener
+
+   Or follow [manual setup instructions](SETUP.md) if you prefer
 
 4. **Start using!**
    ```bash
@@ -116,12 +125,31 @@ show-telegram 81950c
 ```
 
 ### Check System Status
-```bash
-# Is the listener running?
-ps aux | grep telegram_listener
 
-# Check recent sessions
-ls -la ~/.claude/.sessions
+The setup script adds these aliases to your shell:
+```bash
+# Start the background listener
+telegram-start
+
+# Stop the listener
+telegram-stop
+
+# Check if listener is running
+telegram-status
+
+# View conversation history
+show-telegram <session_id>
+```
+
+**Important:** After running setup.sh, reload your shell:
+```bash
+# For zsh (macOS default)
+source ~/.zshrc
+
+# For bash
+source ~/.bashrc
+
+# Or just open a new terminal
 ```
 
 ## 🔧 Configuration
