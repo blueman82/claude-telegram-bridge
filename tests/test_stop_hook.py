@@ -9,8 +9,8 @@ import tempfile
 import json
 from unittest.mock import patch, mock_open
 
-# Add the scripts directory to path for imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'scripts'))
+# Add the hooks directory to path for imports (where actual stop.py lives)
+sys.path.insert(0, os.path.expanduser('~/.claude/hooks'))
 
 # Import functions from stop.py
 from stop import generate_session_id, parse_targeted_message, save_session_mapping
