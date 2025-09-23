@@ -241,7 +241,6 @@ else
     fi
     print_success "Python dependencies installed"
 fi
-print_success "Python dependencies installed"
 
 # Create directories
 print_status "Creating necessary directories..."
