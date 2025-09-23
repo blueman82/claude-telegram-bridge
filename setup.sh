@@ -210,6 +210,20 @@ else
     print_warning "Could not send test message. Check your token and chat ID"
 fi
 
+# Initialize sessions file if it doesn't exist
+if [ ! -f ~/.claude/.sessions ]; then
+    echo '{}' > ~/.claude/.sessions
+    print_success "Sessions tracking file initialized"
+fi
+
+# Test that the stop hook is executable
+if [ -x ~/.claude/hooks/stop.py ]; then
+    print_success "Stop hook is properly configured"
+else
+    print_error "Stop hook is not executable"
+    chmod +x ~/.claude/hooks/stop.py
+fi
+
 # Setup aliases
 echo ""
 print_status "Setting up convenient aliases..."
@@ -270,8 +284,15 @@ echo "  show-telegram ID  - View Telegram conversation"
 echo ""
 echo "Test it out:"
 echo "  1. Run: claude 'Hello from Claude!'"
-echo "  2. Check Telegram for notification"
-echo "  3. Reply with: session_id:your message"
+echo "  2. Check Telegram for notification with session ID"
+echo "  3. Reply with format: session_id:your message"
+echo ""
+echo "Log files:"
+echo "  Listener log: ~/telegram_listener.log"
+echo "  Claude logs: ~/.claude/logs/"
 echo ""
 print_success "Setup complete! Source your shell config or restart terminal for aliases."
-echo "  source $SHELL_RC"
+echo ""
+echo "  ${GREEN}source $SHELL_RC${NC}"
+echo ""
+echo "Or open a new terminal window."
