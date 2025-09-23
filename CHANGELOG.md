@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.5] - 2025-09-23
+
+### Fixed
+- **Telegram conversation history bug** - Fixed `show-telegram` command not finding conversations initiated via Telegram
+  - Added missing "User replied via Telegram:" prefix to messages in `telegram_listener_simple.py`
+  - Messages from Telegram replies are now properly formatted for history viewing
+  - Resolves disconnect between working Telegram notifications and broken conversation history display
+  - `show-telegram <session_id>` now correctly shows Telegram-initiated conversations
+
 ## [1.1.4] - 2024-09-23
 
 ### Added
