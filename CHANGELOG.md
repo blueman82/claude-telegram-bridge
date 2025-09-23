@@ -2,6 +2,13 @@
 
 ## [1.1.5] - 2025-09-23
 
+### Added
+- **Auto-start on boot** - Telegram listener now automatically starts after system reboot
+  - Created LaunchAgent plist at `~/Library/LaunchAgents/com.claude.telegram.plist`
+  - Telegram listener automatically restarts if it crashes
+  - Logs to `~/telegram_listener.log` for debugging
+  - Ensures 24/7 availability without manual intervention
+
 ### Fixed
 - **Telegram conversation history bug** - Fixed `show-telegram` command not finding conversations initiated via Telegram
   - Added missing "User replied via Telegram:" prefix to messages in `telegram_listener_simple.py`
