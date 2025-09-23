@@ -168,7 +168,7 @@ setup_manual_start() {
 # Start listener via app bundle
 start_listener_via_app() {
     # Kill any existing listeners (both old and new filenames)
-    pkill -f telegram_listener_simple.py 2>/dev/null || true
+    pkill -f telegram_listener.py 2>/dev/null || true
     pkill -f telegram_listener.py 2>/dev/null || true
 
     # Start the app bundle
@@ -188,7 +188,7 @@ start_listener_via_app() {
 # Start listener manually
 start_listener_manually() {
     # Kill any existing listeners (both old and new filenames)
-    pkill -f telegram_listener_simple.py 2>/dev/null || true
+    pkill -f telegram_listener.py 2>/dev/null || true
     pkill -f telegram_listener.py 2>/dev/null || true
 
     # Start new listener
@@ -456,7 +456,7 @@ if ! grep -q "show-telegram" "$SHELL_RC" 2>/dev/null; then
     echo "alias show-changes='python3 ~/.claude/show-changes.py'" >> "$SHELL_RC"
     echo "alias telegram-status='ps aux | grep telegram_listener | grep -v grep'" >> "$SHELL_RC"
     echo "alias telegram-start='nohup python3 ~/.claude/telegram_listener.py > ~/telegram_listener.log 2>&1 &'" >> "$SHELL_RC"
-    echo "alias telegram-stop='pkill -f telegram_listener_simple.py; pkill -f telegram_listener.py'" >> "$SHELL_RC"
+    echo "alias telegram-stop='pkill -f telegram_listener.py; pkill -f telegram_listener.py'" >> "$SHELL_RC"
     print_success "Aliases added to $SHELL_RC"
 else
     print_status "Aliases already configured (telegram-start, telegram-stop, telegram-status, show-telegram, show-changes)"
