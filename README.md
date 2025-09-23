@@ -126,17 +126,22 @@ claude "Explain quantum computing"
 
 ### View Conversation History
 ```bash
-# Show what happened in a Telegram session
+# From terminal/bash shell:
 show-telegram 81950c
+
+# From within active Claude Code session:
+!show-telegram 81950c
 ```
 
 ### View Git Changes
 ```bash
-# Show files changed during a session
-show-changes 81950c
+# From terminal/bash shell:
+show-changes 81950c              # Files changed during session
+show-changes 81950c --full       # Complete diff with code changes
 
-# Show complete diff with code changes
-show-changes 81950c --full
+# From within active Claude Code session:
+!show-changes 81950c             # Files changed during session
+!show-changes 81950c --full      # Complete diff with code changes
 
 # Lists available sessions if ID not found
 show-changes invalid_id
