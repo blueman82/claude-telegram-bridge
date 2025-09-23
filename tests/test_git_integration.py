@@ -34,7 +34,7 @@ def test_get_recent_changes_with_working_changes():
     # Mock git status output (porcelain format)
     status_result = MagicMock()
     status_result.returncode = 0
-    status_result.stdout = " M src/app.py\n A tests/test.py\n?? README.md"
+    status_result.stdout = " M src/app.py\n A tests/test.py\n?? README.md\n"
 
     # Mock git log (not used when there are working changes)
     log_result = MagicMock()
