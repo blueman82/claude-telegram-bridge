@@ -110,7 +110,7 @@ The listener needs to run continuously to handle delayed replies:
 
 ```bash
 # Run in background
-nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
+nohup python3 ~/.claude/telegram_listener.py > ~/telegram_listener.log 2>&1 &
 
 # Or use screen/tmux for better management
 screen -dmS telegram-listener python3 ~/.claude/telegram_listener.py
@@ -247,7 +247,7 @@ If you prefer manual control or need to reconfigure:
 
 ```bash
 # Start the listener in background
-nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
+nohup python3 ~/.claude/telegram_listener.py > ~/telegram_listener.log 2>&1 &
 
 # Or use the provided aliases (if setup.sh was run):
 telegram-start
