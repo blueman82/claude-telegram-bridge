@@ -21,7 +21,7 @@
 - **Filename simplification** - Cleaned up script naming for better usability
   - Renamed `telegram_listener_simple.py` to `telegram_listener.py`
   - Updated all references in setup.sh, documentation, and project files
-  - Maintains backward compatibility for existing installations
+  - Removed all backward compatibility references for clean codebase
 - **Setup script user experience** - Improved feedback and visibility
   - Enhanced "Aliases already configured" message to show which aliases exist
   - Fixed color rendering in final setup message with proper echo -e flag
