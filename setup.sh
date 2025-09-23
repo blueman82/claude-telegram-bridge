@@ -335,25 +335,93 @@ else
     print_status "Aliases already configured"
 fi
 
-# Start listener
+# Configure telegram listener startup
 echo ""
-read -p "Start the Telegram listener now? (Y/n): " start_listener
-if [[ ! "$start_listener" =~ ^[Nn]$ ]]; then
-    # Kill any existing listener
-    pkill -f telegram_listener_simple.py 2>/dev/null || true
+print_status "Telegram Listener Configuration"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "Choose how you want the telegram listener to start:"
+echo "  1) Auto-start on login (recommended)"
+echo "     - Creates macOS app bundle"
+echo "     - Adds to Login Items"
+echo "     - Starts automatically when you log in"
+echo ""
+echo "  2) Manual start"
+echo "     - Start/stop manually using aliases"
+echo "     - More control over when it runs"
+echo ""
 
-    # Start new listener
-    nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
-    sleep 2
+while true; do
+    read -p "Choose option (1 for auto-start, 2 for manual): " startup_choice
+    case $startup_choice in
+        1)
+            # Auto-start configuration
+            print_status "Setting up auto-start functionality..."
 
-    if ps aux | grep -v grep | grep -q telegram_listener_simple.py; then
-        print_success "Telegram listener started (PID: $(pgrep -f telegram_listener_simple.py))"
-    else
-        print_error "Failed to start listener. Check ~/telegram_listener.log for errors"
-    fi
-else
-    print_status "Listener not started. Run 'telegram-start' to start it later"
-fi
+            # Create app bundle
+            create_telegram_app_bundle
+
+            # Add to login items
+            add_to_login_items
+
+            # Ask if they want to start it now
+            echo ""
+            read -p "Start the listener now? (Y/n): " start_now
+            if [[ ! "$start_now" =~ ^[Nn]$ ]]; then
+                # Kill any existing listener
+                pkill -f telegram_listener_simple.py 2>/dev/null || true
+
+                # Start the app bundle
+                print_status "Starting TelegramListener app..."
+                open "$HOME/Applications/TelegramListener.app"
+                sleep 3
+
+                if ps aux | grep -v grep | grep -q telegram_listener_simple.py; then
+                    print_success "Telegram listener started via app bundle (PID: $(pgrep -f telegram_listener_simple.py))"
+                    print_success "Auto-start configured - will start automatically on next login"
+                else
+                    print_warning "App bundle created but listener not running. Trying manual start..."
+                    nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
+                    sleep 2
+                    if ps aux | grep -v grep | grep -q telegram_listener_simple.py; then
+                        print_success "Telegram listener started manually (PID: $(pgrep -f telegram_listener_simple.py))"
+                    else
+                        print_error "Failed to start listener. Check ~/telegram_listener.log for errors"
+                    fi
+                fi
+            else
+                print_success "Auto-start configured - will start automatically on next login"
+                print_status "Use 'open ~/Applications/TelegramListener.app' to start manually"
+            fi
+            break
+            ;;
+        2)
+            # Manual start configuration
+            print_status "Manual start selected"
+            read -p "Start the Telegram listener now? (Y/n): " start_listener
+            if [[ ! "$start_listener" =~ ^[Nn]$ ]]; then
+                # Kill any existing listener
+                pkill -f telegram_listener_simple.py 2>/dev/null || true
+
+                # Start new listener
+                nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
+                sleep 2
+
+                if ps aux | grep -v grep | grep -q telegram_listener_simple.py; then
+                    print_success "Telegram listener started (PID: $(pgrep -f telegram_listener_simple.py))"
+                else
+                    print_error "Failed to start listener. Check ~/telegram_listener.log for errors"
+                fi
+            else
+                print_status "Listener not started. Run 'telegram-start' to start it later"
+            fi
+            break
+            ;;
+        *)
+            print_error "Please choose 1 or 2"
+            ;;
+    esac
+done
 
 # Success message
 echo ""
