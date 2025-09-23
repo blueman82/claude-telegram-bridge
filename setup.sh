@@ -253,8 +253,8 @@ cp scripts/stop.py ~/.claude/hooks/
 chmod +x ~/.claude/hooks/stop.py
 print_success "Stop hook installed"
 
-cp scripts/telegram_listener_simple.py ~/.claude/
-chmod +x ~/.claude/telegram_listener_simple.py
+cp scripts/telegram_listener.py ~/.claude/
+chmod +x ~/.claude/telegram_listener.py
 print_success "Telegram listener installed"
 
 cp scripts/show-telegram.py ~/.claude/
