@@ -224,10 +224,23 @@ print_success "Claude CLI found"
 
 # Check/Install Python packages
 print_status "Checking Python dependencies..."
-pip3 install --user -q requests python-dotenv 2>/dev/null || {
+
+# Check if packages are already available
+if python3 -c "import requests, dotenv" 2>/dev/null; then
+    print_success "Python dependencies already available"
+else
     print_warning "Installing Python dependencies..."
-    pip3 install --user --break-system-packages requests python-dotenv
-}
+    # Try user install first, then with break-system-packages if needed
+    if ! pip3 install --user -q requests python-dotenv 2>/dev/null; then
+        print_warning "User install failed, trying with system override..."
+        pip3 install --user --break-system-packages requests python-dotenv || {
+            print_error "Failed to install Python dependencies"
+            echo "Please install manually: pip3 install --user requests python-dotenv"
+            exit 1
+        }
+    fi
+    print_success "Python dependencies installed"
+fi
 print_success "Python dependencies installed"
 
 # Create directories
