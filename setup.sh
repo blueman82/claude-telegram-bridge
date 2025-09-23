@@ -18,6 +18,86 @@ print_success() { echo -e "${GREEN}[✓]${NC} $1"; }
 print_error() { echo -e "${RED}[✗]${NC} $1"; }
 print_warning() { echo -e "${YELLOW}[!]${NC} $1"; }
 
+# Create macOS app bundle for auto-start functionality
+create_telegram_app_bundle() {
+    local app_path="$HOME/Applications/TelegramListener.app"
+    local script_path="$HOME/.claude/telegram_listener_simple.py"
+    local project_dir="$(pwd)"
+
+    print_status "Creating TelegramListener app bundle..."
+
+    # Create app bundle structure
+    mkdir -p "$app_path/Contents/MacOS"
+    mkdir -p "$app_path/Contents/Resources"
+
+    # Create executable wrapper script
+    cat > "$app_path/Contents/MacOS/TelegramListener" << EOF
+#!/bin/bash
+# TelegramListener wrapper script for auto-start
+cd "$project_dir"
+source ~/.claude/.env 2>/dev/null || true
+exec python3 "$script_path"
+EOF
+
+    chmod +x "$app_path/Contents/MacOS/TelegramListener"
+
+    # Create Info.plist with proper bundle information
+    cat > "$app_path/Contents/Info.plist" << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>TelegramListener</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.claude-telegram-bridge.listener</string>
+    <key>CFBundleName</key>
+    <string>TelegramListener</string>
+    <key>CFBundleDisplayName</key>
+    <string>Telegram Listener</string>
+    <key>CFBundleVersion</key>
+    <string>1.1.6</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.1.6</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>LSBackgroundOnly</key>
+    <true/>
+    <key>LSUIElement</key>
+    <true/>
+</dict>
+</plist>
+EOF
+
+    print_success "App bundle created at $app_path"
+}
+
+# Add app to macOS Login Items
+add_to_login_items() {
+    local app_path="$HOME/Applications/TelegramListener.app"
+
+    print_status "Adding TelegramListener to Login Items..."
+
+    if osascript -e "tell application \"System Events\" to make login item at end with properties {path:\"$app_path\", hidden:true}" 2>/dev/null; then
+        print_success "Added to Login Items (will start automatically on login)"
+    else
+        print_warning "Could not add to Login Items automatically"
+        echo "You can add it manually in System Preferences > Users & Groups > Login Items"
+        echo "Add: $app_path"
+    fi
+}
+
+# Remove app from macOS Login Items
+remove_from_login_items() {
+    print_status "Removing TelegramListener from Login Items..."
+
+    if osascript -e "tell application \"System Events\" to delete login item \"TelegramListener\"" 2>/dev/null; then
+        print_success "Removed from Login Items"
+    else
+        print_status "TelegramListener not found in Login Items (already removed or not added)"
+    fi
+}
+
 echo "╔═══════════════════════════════════════════╗"
 echo "║     Claude-Telegram Bridge Setup         ║"
 echo "╚═══════════════════════════════════════════╝"
