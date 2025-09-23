@@ -74,7 +74,7 @@ Later: show-changes abc123 --full  # See complete diff
    - Copy scripts to correct locations
    - Configure your Telegram bot
    - Add convenient aliases to your shell
-   - Start the background listener
+   - Offer auto-start setup (macOS Login Items) or manual start option
 
    Or follow [manual setup instructions](SETUP.md) if you prefer
 
