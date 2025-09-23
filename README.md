@@ -128,6 +128,18 @@ claude "Explain quantum computing"
 show-telegram 81950c
 ```
 
+### View Git Changes
+```bash
+# Show files changed during a session
+show-changes 81950c
+
+# Show complete diff with code changes
+show-changes 81950c --full
+
+# Lists available sessions if ID not found
+show-changes invalid_id
+```
+
 ### Check System Status
 
 The setup script adds these aliases to your shell:
