@@ -246,6 +246,7 @@ if ! grep -q "show-telegram" "$SHELL_RC" 2>/dev/null; then
     echo "" >> "$SHELL_RC"
     echo "# Claude-Telegram Bridge aliases" >> "$SHELL_RC"
     echo "alias show-telegram='python3 ~/.claude/show-telegram.py'" >> "$SHELL_RC"
+    echo "alias show-changes='python3 ~/.claude/show-changes.py'" >> "$SHELL_RC"
     echo "alias telegram-status='ps aux | grep telegram_listener'" >> "$SHELL_RC"
     echo "alias telegram-start='nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &'" >> "$SHELL_RC"
     echo "alias telegram-stop='pkill -f telegram_listener_simple.py'" >> "$SHELL_RC"
