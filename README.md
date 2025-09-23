@@ -205,6 +205,7 @@ echo "YOUR_CHAT_ID" > ~/.claude/.chat_id
 - Markdown parsing conflicts with special characters in Claude's responses
 - Stop hook only triggers when Claude finishes responding
 - Replies must use exact format: `session_id:message`
+- Shell detection may add aliases to wrong config file (zsh users may need to copy from ~/.bashrc to ~/.zshrc)
 
 ## 🎆 Features in Detail
 
