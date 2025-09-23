@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.1.4] - 2024-09-23
+
+### Added
+- **CLAUDE.md file** - Comprehensive guidance for Claude Code when working in this repository
+  - Project overview and architecture documentation
+  - Development commands (installation, testing, running)
+  - Core component descriptions and data flow
+  - Development patterns and coding conventions
+  - Project structure reference
+  - Common development tasks guidance
+  - Security considerations and best practices
+
+### Enhanced
+- **Developer experience** - Future Claude Code instances will be more productive
+  - Clear build, test, and deployment commands
+  - Architecture understanding without needing to read multiple files
+  - Development patterns for consistent code contributions
+  - Debugging guidance for common issues
+
 ## [1.1.3] - 2024-09-23
 
 ### Fixed
