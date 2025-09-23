@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.1.1] - 2024-09-23
+
+### Added
+- **Basic test suite for core functionality**
+  - `tests/test_stop_hook.py` - Session ID generation, message parsing, session mapping
+  - `tests/test_git_integration.py` - Git change detection with subprocess mocking
+  - `requirements-test.txt` - Test dependencies (pytest, requests, python-dotenv)
+  - `tests/README.md` - Testing guide and setup instructions
+- **Test infrastructure**
+  - Simple built-in test runner (no external dependencies required)
+  - Comprehensive edge case coverage and error handling tests
+  - Mock-based testing for external subprocess calls
+  - Virtual environment setup for isolated testing
+
+### Enhanced
+- **Documentation updates**
+  - Updated README.md with testing guide and contributor instructions
+  - Added testing section to contributing guidelines
+  - Updated test status badge from "none" to "basic"
+- **Quality assurance**
+  - All core functions now have test coverage
+  - Validation of session ID uniqueness and deterministic generation
+  - Message parsing edge cases thoroughly tested
+
+### Technical Details
+- 7 test functions for stop hook core functionality
+- 6 test functions for git integration with comprehensive mocking
+- Tests validate error handling, edge cases, and expected behavior
+- No external dependencies for basic test execution
+
 ## [1.1.0] - 2024-09-23
 
 ### Added
