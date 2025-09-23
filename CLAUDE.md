@@ -36,7 +36,7 @@ pytest tests/ -v
 ### Running the System
 ```bash
 # Start background listener (required for replies)
-nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
+nohup python3 ~/.claude/telegram_listener.py > ~/telegram_listener.log 2>&1 &
 
 # Check listener status
 ps aux | grep telegram_listener
@@ -60,7 +60,7 @@ python3 scripts/show-changes.py <session_id> --full  # with complete diff
    - Integrates with git to show file changes
    - Supports multiple TTS and LLM services for enhanced notifications
 
-2. **Telegram Listener** (`scripts/telegram_listener_simple.py`)
+2. **Telegram Listener** (`scripts/telegram_listener.py`)
    - Background service monitoring Telegram for replies
    - Parses messages with format `session_id:message`
    - Resumes Claude sessions using `claude --resume`
@@ -119,7 +119,7 @@ python3 scripts/show-changes.py <session_id> --full  # with complete diff
 ```
 scripts/
 ├── stop.py                    # Main stop hook (runs after Claude responses)
-├── telegram_listener_simple.py # Background service for Telegram replies
+├── telegram_listener.py # Background service for Telegram replies
 ├── show-telegram.py           # View conversation history
 └── show-changes.py           # View git changes per session
 
@@ -147,7 +147,7 @@ requirements-test.txt         # Testing dependencies
 4. Use `show-telegram` and `show-changes` for session debugging
 
 ### Modifying Message Format
-- Update parsing logic in `telegram_listener_simple.py`
+- Update parsing logic in `telegram_listener.py`
 - Modify formatting in `stop.py`
 - Ensure tests cover new message formats
 - Consider backwards compatibility
