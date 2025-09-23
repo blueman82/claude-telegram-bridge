@@ -226,7 +226,7 @@ print_success "Claude CLI found"
 print_status "Checking Python dependencies..."
 pip3 install --user -q requests python-dotenv 2>/dev/null || {
     print_warning "Installing Python dependencies..."
-    pip3 install --user requests python-dotenv
+    pip3 install --user --break-system-packages requests python-dotenv
 }
 print_success "Python dependencies installed"
 
