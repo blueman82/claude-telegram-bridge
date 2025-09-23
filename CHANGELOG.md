@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.1.0] - 2024-09-23
+
+### Added
+- **Git diff integration in Telegram notifications**
+  - Added `get_recent_changes()` function to detect modified, added, deleted, and untracked files
+  - Enhanced stop hook to show git changes before Claude's response
+  - Added file type icons (✏️ modified, ➕ added, ➖ deleted, 📄 untracked, 📦 commits)
+  - Automatic truncation to first 5 changes to prevent long messages
+  - Shows recent commits if no working changes exist
+- **Enhanced session tracking**
+  - Added `start_time` field to session mappings for change tracking
+  - Preserves session start time across multiple notifications
+- **New show-changes command**
+  - `scripts/show-changes.py` - View detailed git changes for any session
+  - Support for `--full` flag to show complete diffs
+  - Support for `--files` flag for file list only (default)
+  - Shows both working directory changes and recent commits
+  - Refactored into focused functions for maintainability
+
+### Enhanced
+- Stop hook now includes git changes in notification format:
+  ```
+  🤖 Session abc123 - project (14:30)
+
+  📂 Recent changes:
+  ✏️ src/app.py (modified)
+  ➕ src/new_feature.py (added)
+
+  [Claude's response...]
+
+  Reply: abc123:your message
+  ```
+
+### Technical Details
+- All functions maintain <100 line limit for new code
+- Non-destructive changes to existing hook functionality
+- Graceful fallback when not in git repository
+- Error handling for git command failures
+
 ## [1.0.0] - 2024-09-23
 
 ### Added
