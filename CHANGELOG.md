@@ -9,6 +9,12 @@
   - Sources `~/.claude/.env` and validates required configuration
   - **Note**: Auto-start blocked by macOS security restrictions on user Documents access
 
+### Updated
+- **Documentation cleanup** - Removed non-functional auto-start instructions
+  - Updated SETUP.md to reflect manual start requirement due to macOS security
+  - Replaced LaunchAgent instructions with background listener management guide
+  - Added clear status check and stop commands for manual listener control
+
 ### Fixed (Updated)
 - **Auto-start limitations** - LaunchAgent cannot access user Documents directory
   - Manual telegram listener start required: `python3 scripts/telegram_listener_simple.py &`
