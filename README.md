@@ -222,9 +222,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+3. **Run tests** to ensure everything works:
+   ```bash
+   python -m venv test_env && source test_env/bin/activate
+   pip install -r requirements-test.txt
+   python tests/test_stop_hook.py && python tests/test_git_integration.py
+   ```
+4. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+5. Push to the branch (`git push origin feature/AmazingFeature`)
+6. Open a Pull Request
 
 ## 📄 License
 
