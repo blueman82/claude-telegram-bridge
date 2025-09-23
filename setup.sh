@@ -427,13 +427,24 @@ echo ""
 print_status "Setting up convenient aliases..."
 
 # Detect shell
-if [ -n "$ZSH_VERSION" ]; then
+# Check user's actual shell, not just script environment
+USER_SHELL=$(basename "$SHELL" 2>/dev/null || echo "unknown")
+if [ "$USER_SHELL" = "zsh" ] || [ -n "$ZSH_VERSION" ]; then
     SHELL_RC="$HOME/.zshrc"
-elif [ -n "$BASH_VERSION" ]; then
+elif [ "$USER_SHELL" = "bash" ] || [ -n "$BASH_VERSION" ]; then
     SHELL_RC="$HOME/.bashrc"
 else
-    SHELL_RC="$HOME/.profile"
+    # Fallback: check which config files exist
+    if [ -f "$HOME/.zshrc" ]; then
+        SHELL_RC="$HOME/.zshrc"
+    elif [ -f "$HOME/.bashrc" ]; then
+        SHELL_RC="$HOME/.bashrc"
+    else
+        SHELL_RC="$HOME/.profile"
+    fi
 fi
+
+print_status "Detected shell config: $SHELL_RC"
 
 # Add aliases if not already present
 if ! grep -q "show-telegram" "$SHELL_RC" 2>/dev/null; then
