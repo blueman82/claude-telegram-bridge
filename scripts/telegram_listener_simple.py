@@ -35,9 +35,12 @@ def parse_targeted_message(message):
 def resume_claude_session(real_session_id, message, cwd):
     """Resume Claude session with message using claude --resume"""
     try:
+        # Add prefix so show-telegram can find the conversation later
+        prefixed_message = f"User replied via Telegram: {message}"
+
         # Use claude --resume to continue the exact same session
         subprocess.Popen([
-            'claude', '--resume', real_session_id, message
+            'claude', '--resume', real_session_id, prefixed_message
         ], cwd=cwd)
         print(f"Resumed Claude session {real_session_id} with: {message}")
         return True
