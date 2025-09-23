@@ -3,11 +3,16 @@
 ## [1.1.5] - 2025-09-23
 
 ### Added
-- **Auto-start on boot** - Telegram listener now automatically starts after system reboot
-  - Created LaunchAgent plist at `~/Library/LaunchAgents/com.claude.telegram.plist`
-  - Telegram listener automatically restarts if it crashes
-  - Logs to `~/telegram_listener.log` for debugging
-  - Ensures 24/7 availability without manual intervention
+- **Telegram listener wrapper script** - Enhanced LaunchAgent support with diagnostic capabilities
+  - Created `scripts/telegram_launcher.sh` with comprehensive error handling
+  - Environment validation and detailed logging for troubleshooting
+  - Sources `~/.claude/.env` and validates required configuration
+  - **Note**: Auto-start blocked by macOS security restrictions on user Documents access
+
+### Fixed (Updated)
+- **Auto-start limitations** - LaunchAgent cannot access user Documents directory
+  - Manual telegram listener start required: `python3 scripts/telegram_listener_simple.py &`
+  - Alternative: Move scripts to system-accessible location for auto-start
 
 ### Fixed
 - **Telegram conversation history bug** - Fixed `show-telegram` command not finding conversations initiated via Telegram
