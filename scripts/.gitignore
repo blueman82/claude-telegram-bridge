@@ -1,0 +1,21 @@
+# Auto-added by Claude Code auto-commit hook
+logs/user_prompt_submit.json
+*.log
+*.tmp
+.env
+.env.local
+.env.*.local
+node_modules/
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+dist/
+build/
+*.egg-info/

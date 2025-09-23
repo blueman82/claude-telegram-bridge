@@ -30,100 +30,120 @@ def load_session_data(session_id):
         return None
 
 
+def check_git_repo(cwd):
+    """Check if directory is a git repository."""
+    git_check = subprocess.run(
+        ["git", "rev-parse", "--git-dir"],
+        cwd=cwd,
+        capture_output=True,
+        text=True
+    )
+    return git_check.returncode == 0
+
+
+def get_working_changes(cwd, show_diff=False):
+    """Get working directory changes."""
+    results = []
+    status_result = subprocess.run(
+        ["git", "status", "--porcelain"],
+        cwd=cwd,
+        capture_output=True,
+        text=True
+    )
+
+    if status_result.returncode == 0 and status_result.stdout.strip():
+        results.append("📋 Working Directory Changes:")
+        results.append("=" * 40)
+
+        status_lines = status_result.stdout.strip().split('\n')
+        for line in status_lines:
+            if len(line) >= 3:
+                status = line[:2]
+                filename = line[3:]
+
+                # Determine change type
+                if 'M' in status:
+                    change_type = "✏️ Modified"
+                elif 'A' in status:
+                    change_type = "➕ Added"
+                elif 'D' in status:
+                    change_type = "➖ Deleted"
+                elif '?' in status:
+                    change_type = "📄 Untracked"
+                else:
+                    change_type = "📝 Changed"
+
+                results.append(f"{change_type}: {filename}")
+
+                # Show diff for modified files if requested
+                if show_diff and 'M' in status:
+                    diff_result = subprocess.run(
+                        ["git", "diff", filename],
+                        cwd=cwd,
+                        capture_output=True,
+                        text=True
+                    )
+                    if diff_result.returncode == 0 and diff_result.stdout.strip():
+                        results.append(f"\nDiff for {filename}:")
+                        results.append("-" * 30)
+                        results.append(diff_result.stdout.strip())
+                        results.append("")
+
+    return results, bool(status_result.stdout.strip())
+
+
+def get_recent_commits(cwd, show_diff=False):
+    """Get recent commits."""
+    results = []
+    commits_result = subprocess.run(
+        ["git", "log", "--oneline", "-10", "--since=2 hours ago"],
+        cwd=cwd,
+        capture_output=True,
+        text=True
+    )
+
+    if commits_result.returncode == 0 and commits_result.stdout.strip():
+        results.append("📦 Recent Commits (last 2 hours):")
+        results.append("=" * 40)
+
+        commit_lines = commits_result.stdout.strip().split('\n')
+        for commit_line in commit_lines:
+            if commit_line.strip():
+                commit_hash = commit_line.split()[0]
+                commit_msg = ' '.join(commit_line.split()[1:])
+                results.append(f"📦 {commit_hash}: {commit_msg}")
+
+                # Show commit diff if requested
+                if show_diff:
+                    diff_result = subprocess.run(
+                        ["git", "show", "--stat", commit_hash],
+                        cwd=cwd,
+                        capture_output=True,
+                        text=True
+                    )
+                    if diff_result.returncode == 0:
+                        results.append(f"\nCommit {commit_hash} changes:")
+                        results.append("-" * 30)
+                        results.append(diff_result.stdout.strip())
+                        results.append("")
+
+    return results
+
+
 def get_git_changes(cwd, since_time=None, show_diff=False):
     """Get git changes for the session directory."""
     try:
-        # Check if this is a git repository
-        git_check = subprocess.run(
-            ["git", "rev-parse", "--git-dir"],
-            cwd=cwd,
-            capture_output=True,
-            text=True
-        )
-        if git_check.returncode != 0:
+        if not check_git_repo(cwd):
             return "Not a git repository"
 
         results = []
-
-        # Get git status for working changes
-        status_result = subprocess.run(
-            ["git", "status", "--porcelain"],
-            cwd=cwd,
-            capture_output=True,
-            text=True
-        )
-
-        if status_result.returncode == 0 and status_result.stdout.strip():
-            results.append("📋 Working Directory Changes:")
-            results.append("=" * 40)
-
-            status_lines = status_result.stdout.strip().split('\n')
-            for line in status_lines:
-                if len(line) >= 3:
-                    status = line[:2]
-                    filename = line[3:]
-
-                    # Determine change type
-                    if 'M' in status:
-                        change_type = "✏️ Modified"
-                    elif 'A' in status:
-                        change_type = "➕ Added"
-                    elif 'D' in status:
-                        change_type = "➖ Deleted"
-                    elif '?' in status:
-                        change_type = "📄 Untracked"
-                    else:
-                        change_type = "📝 Changed"
-
-                    results.append(f"{change_type}: {filename}")
-
-                    # Show diff for modified files if requested
-                    if show_diff and 'M' in status:
-                        diff_result = subprocess.run(
-                            ["git", "diff", filename],
-                            cwd=cwd,
-                            capture_output=True,
-                            text=True
-                        )
-                        if diff_result.returncode == 0 and diff_result.stdout.strip():
-                            results.append(f"\nDiff for {filename}:")
-                            results.append("-" * 30)
-                            results.append(diff_result.stdout.strip())
-                            results.append("")
+        working_changes, has_working = get_working_changes(cwd, show_diff)
+        results.extend(working_changes)
 
         # Get recent commits if no working changes
-        if not status_result.stdout.strip():
-            commits_result = subprocess.run(
-                ["git", "log", "--oneline", "-10", "--since=2 hours ago"],
-                cwd=cwd,
-                capture_output=True,
-                text=True
-            )
-
-            if commits_result.returncode == 0 and commits_result.stdout.strip():
-                results.append("📦 Recent Commits (last 2 hours):")
-                results.append("=" * 40)
-
-                commit_lines = commits_result.stdout.strip().split('\n')
-                for commit_line in commit_lines:
-                    if commit_line.strip():
-                        commit_hash = commit_line.split()[0]
-                        commit_msg = ' '.join(commit_line.split()[1:])
-                        results.append(f"📦 {commit_hash}: {commit_msg}")
-
-                        # Show commit diff if requested
-                        if show_diff:
-                            diff_result = subprocess.run(
-                                ["git", "show", "--stat", commit_hash],
-                                cwd=cwd,
-                                capture_output=True,
-                                text=True
-                            )
-                            if diff_result.returncode == 0:
-                                results.append(f"\nCommit {commit_hash} changes:")
-                                results.append("-" * 30)
-                                results.append(diff_result.stdout.strip())
-                                results.append("")
+        if not has_working:
+            commit_changes = get_recent_commits(cwd, show_diff)
+            results.extend(commit_changes)
 
         return '\n'.join(results) if results else "No git changes found"
 
