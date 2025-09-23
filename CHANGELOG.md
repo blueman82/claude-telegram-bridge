@@ -2,6 +2,12 @@
 
 ## [1.1.3] - 2024-09-23
 
+### Fixed
+- **Setup script completeness** - Fixed missing `show-changes` alias in automated setup
+  - Added missing `show-changes` alias to setup.sh script (line 249)
+  - Script now properly installs all documented commands and aliases
+  - Ensures consistent setup experience matching documentation promises
+
 ### Enhanced
 - **Documentation clarity** - Improved usage instructions across all documentation
   - Updated both SETUP.md and README.md with clear distinction between terminal/bash shell and Claude Code session usage
