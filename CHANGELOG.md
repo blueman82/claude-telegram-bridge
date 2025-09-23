@@ -24,9 +24,10 @@
   - Extracted inline startup logic into modular functions
   - Maintained all functionality while improving code organization
   - Each new function under 100 lines (compliance with function size limits)
-- **Python package installation** - Added --user flag for externally-managed environments
+- **Python package installation** - Added --user and --break-system-packages flags for externally-managed environments
   - Fixes pip install errors on modern macOS systems with Homebrew Python
   - Complies with PEP 668 externally-managed environment requirements
+  - Uses --break-system-packages as fallback for strict environments
   - Maintains compatibility across different Python installation methods
 
 ## [1.1.5] - 2025-09-23
