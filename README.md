@@ -14,6 +14,7 @@ A seamless 2-way communication system between Claude Code and Telegram, enabling
 - **🔍 Session Management**: Unique session IDs prevent multi-session conflicts
 - **📊 History Viewing**: Review Telegram conversations with `show-telegram` command
 - **🚀 Always Running**: Background listener works immediately or years later
+- **⚡ Auto-start Support**: macOS Login Items integration for automatic startup on login
 - **🎯 Simple & Clean**: Minimal setup, no complex dependencies
 - **📂 Git Integration**: See what code changed during each session automatically
 - **🔍 Detailed Diffs**: View complete git changes with `show-changes` command
