@@ -124,6 +124,9 @@ Add to your `~/.zshrc` or `~/.bashrc`:
 # Show Telegram conversation history
 alias show-telegram="python3 ~/.claude/show-telegram.py"
 
+# Show git changes for a session (v1.1.0+)
+alias show-changes="python3 ~/.claude/show-changes.py"
+
 # Check listener status
 alias telegram-status="ps aux | grep telegram_listener"
 ```
