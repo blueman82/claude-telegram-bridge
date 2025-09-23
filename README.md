@@ -44,7 +44,7 @@ Terminal: [Session continues automatically with your question]
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/claude-telegram-bridge.git
+   git clone https://github.com/blueman82/claude-telegram-bridge.git
    cd claude-telegram-bridge
    ```
 
@@ -173,6 +173,27 @@ echo "YOUR_CHAT_ID" > ~/.claude/.chat_id
 - Markdown parsing conflicts with special characters in Claude's responses
 - Stop hook only triggers when Claude finishes responding
 - Replies must use exact format: `session_id:message`
+
+## 🎆 Features in Detail
+
+### Session Management
+- Each Claude session gets a unique 6-character ID
+- Sessions persist across terminal and Telegram
+- Multiple concurrent sessions supported without conflicts
+- Session history stored in `~/.claude/.sessions`
+
+### Formatting Support
+- **Bold text** preserved from Claude's markdown
+- *Italic text* converted properly
+- `Code blocks` maintained in monospace
+- Headers converted to bold for Telegram compatibility
+- Lists converted to bullet points
+
+### Hook Safety
+- **Setup script preserves existing Claude hooks**
+- Appends our stop hook without overwriting others
+- Non-destructive configuration updates
+- Checks for existing configuration before modifying
 
 ## 🤝 Contributing
 
