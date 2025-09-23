@@ -79,27 +79,24 @@ Terminal: [Session continues automatically with your question]
 - [Troubleshooting](SETUP.md#troubleshooting) - Common issues and solutions
 - [Security Notes](SETUP.md#security-notes) - Best practices
 
+
 ## 🏗️ Architecture
 
+```mermaid
+graph LR
+    A[Claude CLI] -->|Triggers on stop| B[Stop Hook]
+    B -->|Sends notification| C[Telegram Bot]
+    C -->|Message with Session ID| D[You on Telegram]
+    D -->|Reply: session_id:message| E[Listener Service]
+    E -->|claude --resume session_id| A
+
+    style A fill:#e1f5e1
+    style B fill:#fff3e0
+    style C fill:#e3f2fd
+    style D fill:#f3e5f5
+    style E fill:#ffe0e0
 ```
-┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│              │     │              │     │              │
-│  Claude CLI  ├────►│  Stop Hook   ├────►│   Telegram   │
-│              │     │              │     │     Bot      │
-└──────────────┘     └──────────────┘     └──────┬───────┘
-                                                  │
-       ▲                                          │
-       │                                          ▼
-       │                                   ┌──────────────┐
-       │                                   │              │
-       └───────────────────────────────────│   You on     │
-                                          │   Telegram   │
-┌──────────────┐                          └──────────────┘
-│              │
-│   Listener   │◄──────────────────────────────┘
-│   Service    │
-└──────────────┘
-```
+
 
 ### Components
 
