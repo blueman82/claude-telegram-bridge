@@ -233,12 +233,21 @@ nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>
 
 ### Background Listener Management
 
-**Manual Start (Required)**
-The telegram listener must be started manually after each reboot due to macOS security restrictions:
+**Auto-start Configuration (Recommended)**
+The setup script now offers automated startup via macOS Login Items:
+
+```bash
+# Run setup script and choose auto-start option
+./setup.sh
+# Choose option 1 when prompted for startup configuration
+```
+
+**Manual Configuration:**
+If you prefer manual control or need to reconfigure:
 
 ```bash
 # Start the listener in background
-nohup python3 scripts/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
+nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
 
 # Or use the provided aliases (if setup.sh was run):
 telegram-start
@@ -262,7 +271,11 @@ pkill -f telegram_listener
 telegram-stop
 ```
 
-**Note:** Auto-start via LaunchAgent is blocked by macOS security policies that prevent system services from accessing user Documents directories.
+**Auto-start Details:**
+- Creates `~/Applications/TelegramListener.app` bundle
+- Adds to macOS Login Items for automatic startup
+- Runs invisibly in background with proper macOS integration
+- Can be managed via System Preferences > Users & Groups > Login Items
 
 ## Support
 
