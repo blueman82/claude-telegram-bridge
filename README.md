@@ -6,10 +6,6 @@ A seamless 2-way communication system between Claude Code and Telegram, enabling
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Platform](https://img.shields.io/badge/platform-macOS%20|%20Linux-lightgrey.svg)
 
-![GitHub stars](https://img.shields.io/github/stars/blueman82/claude-telegram-bridge)
-![GitHub forks](https://img.shields.io/github/forks/blueman82/claude-telegram-bridge)
-![GitHub last commit](https://img.shields.io/github/last-commit/blueman82/claude-telegram-bridge)
-
 ## 🌟 Features
 
 - **📱 Real-time Notifications**: Get Telegram messages whenever Claude completes a response
