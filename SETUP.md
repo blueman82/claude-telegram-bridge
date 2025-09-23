@@ -211,8 +211,8 @@ ps aux | grep telegram_listener
 
 Restart if needed:
 ```bash
-pkill -f telegram_listener_simple.py
-nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
+pkill -f telegram_listener.py
+nohup python3 ~/.claude/telegram_listener.py > ~/telegram_listener.log 2>&1 &
 ```
 
 ### Replies Not Working
