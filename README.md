@@ -160,12 +160,16 @@ telegram-stop
 # Check if listener is running
 telegram-status
 
-# View conversation history
+# View conversation history (from terminal)
 show-telegram <session_id>
 
-# View git changes for a session
+# View git changes for a session (from terminal)
 show-changes <session_id>
 show-changes <session_id> --full  # Full diff
+
+# Note: Use ! prefix when inside Claude Code sessions:
+# !show-telegram <session_id>
+# !show-changes <session_id>
 ```
 
 **Important:** After running setup.sh, reload your shell:
