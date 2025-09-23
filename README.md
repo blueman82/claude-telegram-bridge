@@ -82,13 +82,10 @@ Terminal: [Session continues automatically with your question]
 
 ## 🏗️ Architecture
 
-```mermaid
-graph TD
-    A[Claude CLI] --> B[Stop Hook]
-    B --> C[Telegram Bot]
-    C --> D[Your Phone]
-    D --> E[Listener Service]
-    E --> A
+```
+[Claude] → [Hook] → [Telegram] → [You]
+    ↑                               ↓
+    └────── [Listener] ←────────────┘
 ```
 
 **Flow:**
