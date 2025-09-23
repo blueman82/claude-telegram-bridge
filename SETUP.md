@@ -46,8 +46,8 @@ This guide walks you through setting up the Claude-Telegram integration for 2-wa
    chmod +x ~/.claude/hooks/stop.py
 
    # Copy listener script
-   cp scripts/telegram_listener_simple.py ~/.claude/
-   chmod +x ~/.claude/telegram_listener_simple.py
+   cp scripts/telegram_listener.py ~/.claude/
+   chmod +x ~/.claude/telegram_listener.py
 
    # Copy show-telegram script
    cp scripts/show-telegram.py ~/.claude/
