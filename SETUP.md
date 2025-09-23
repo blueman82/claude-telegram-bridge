@@ -231,35 +231,38 @@ nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>
 
 ## Advanced Configuration
 
-### Auto-start on Boot (macOS)
+### Background Listener Management
 
-Create `~/Library/LaunchAgents/com.claude.telegram.plist`:
+**Manual Start (Required)**
+The telegram listener must be started manually after each reboot due to macOS security restrictions:
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.claude.telegram</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/usr/bin/python3</string>
-        <string>/Users/YOUR_USERNAME/.claude/telegram_listener_simple.py</string>
-    </array>
-    <key>RunAtLoad</key>
-    <true/>
-    <key>KeepAlive</key>
-    <true/>
-</dict>
-</plist>
-```
-
-Then load it:
 ```bash
-launchctl load ~/Library/LaunchAgents/com.claude.telegram.plist
+# Start the listener in background
+nohup python3 scripts/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
+
+# Or use the provided aliases (if setup.sh was run):
+telegram-start
 ```
+
+**Check Status:**
+```bash
+# Check if listener is running
+ps aux | grep telegram_listener | grep -v grep
+
+# Or use alias:
+telegram-status
+```
+
+**Stop Listener:**
+```bash
+# Kill listener manually
+pkill -f telegram_listener
+
+# Or use alias:
+telegram-stop
+```
+
+**Note:** Auto-start via LaunchAgent is blocked by macOS security policies that prevent system services from accessing user Documents directories.
 
 ## Support
 
