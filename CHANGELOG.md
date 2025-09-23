@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.1.2] - 2024-09-23
+
+### Added
+- **Automatic session cleanup** - Prevents unlimited growth of `.sessions` file
+  - `cleanup_old_sessions()` function removes sessions older than 30 days
+  - Automatically triggered with 10% probability during normal operation
+  - Uses pathlib for modern file handling
+  - Maintains performance by only cleaning when sessions are actually removed
+
+### Enhanced
+- **Session management** - More efficient long-term operation
+  - Prevents performance degradation from large session files
+  - Automatic maintenance without user intervention
+  - Preserves all active/recent sessions while cleaning old data
+
+### Technical Details
+- 29-line cleanup function with configurable retention period
+- Probabilistic trigger (10% chance) to distribute cleanup load
+- Graceful error handling maintains system stability
+- Uses pathlib instead of os module for file operations
+
 ## [1.1.1] - 2024-09-23
 
 ### Added
