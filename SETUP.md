@@ -52,6 +52,10 @@ This guide walks you through setting up the Claude-Telegram integration for 2-wa
    # Copy show-telegram script
    cp scripts/show-telegram.py ~/.claude/
    chmod +x ~/.claude/show-telegram.py
+
+   # Copy show-changes script (v1.1.0+)
+   cp scripts/show-changes.py ~/.claude/
+   chmod +x ~/.claude/show-changes.py
    ```
 
 3. Create environment file:
