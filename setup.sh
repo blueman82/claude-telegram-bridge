@@ -190,11 +190,11 @@ start_listener_manually() {
     pkill -f telegram_listener.py 2>/dev/null || true
 
     # Start new listener
-    nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
+    nohup python3 ~/.claude/telegram_listener.py > ~/telegram_listener.log 2>&1 &
     sleep 2
 
-    if ps aux | grep -v grep | grep -q telegram_listener_simple.py; then
-        print_success "Telegram listener started (PID: $(pgrep -f telegram_listener_simple.py))"
+    if ps aux | grep -v grep | grep -q telegram_listener.py; then
+        print_success "Telegram listener started (PID: $(pgrep -f telegram_listener.py))"
     else
         print_error "Failed to start listener. Check ~/telegram_listener.log for errors"
     fi
@@ -453,8 +453,8 @@ if ! grep -q "show-telegram" "$SHELL_RC" 2>/dev/null; then
     echo "alias show-telegram='python3 ~/.claude/show-telegram.py'" >> "$SHELL_RC"
     echo "alias show-changes='python3 ~/.claude/show-changes.py'" >> "$SHELL_RC"
     echo "alias telegram-status='ps aux | grep telegram_listener'" >> "$SHELL_RC"
-    echo "alias telegram-start='nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &'" >> "$SHELL_RC"
-    echo "alias telegram-stop='pkill -f telegram_listener_simple.py'" >> "$SHELL_RC"
+    echo "alias telegram-start='nohup python3 ~/.claude/telegram_listener.py > ~/telegram_listener.log 2>&1 &'" >> "$SHELL_RC"
+    echo "alias telegram-stop='pkill -f telegram_listener.py'" >> "$SHELL_RC"
     print_success "Aliases added to $SHELL_RC"
 else
     print_status "Aliases already configured"
