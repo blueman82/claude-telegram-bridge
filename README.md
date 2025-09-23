@@ -244,7 +244,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🚦 Status
 
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
-![Tests](https://img.shields.io/badge/tests-none-yellow)
+![Tests](https://img.shields.io/badge/tests-basic-green)
 ![Version](https://img.shields.io/badge/version-1.1.0-blue)
 
 ---
