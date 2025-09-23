@@ -7,8 +7,8 @@ import sys
 import os
 from unittest.mock import patch, MagicMock
 
-# Add the scripts directory to path for imports
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'scripts'))
+# Add the hooks directory to path for imports (where actual stop.py lives)
+sys.path.insert(0, os.path.expanduser('~/.claude/hooks'))
 
 # Import functions from stop.py
 from stop import get_recent_changes
