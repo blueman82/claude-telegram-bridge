@@ -72,8 +72,8 @@ def test_parse_targeted_message_invalid():
     result = parse_targeted_message("abc123 hello", target_session)
     assert result is None, "Should reject messages without colon"
 
-    # Empty message
-    result = parse_targeted_message("abc123:", target_session)
+    # Empty message (but still over 7 chars minimum)
+    result = parse_targeted_message("abc123: ", target_session)
     assert result == "", "Should handle empty message"
 
     # Too short
