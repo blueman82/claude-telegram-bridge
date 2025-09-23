@@ -238,7 +238,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📬 Support
 
 - Open an issue for bugs or feature requests
-- Check [existing issues](https://github.com/yourusername/claude-telegram-bridge/issues) before creating new ones
+- Check [existing issues](https://github.com/blueman82/claude-telegram-bridge/issues) before creating new ones
 - For setup help, see the [troubleshooting guide](SETUP.md#troubleshooting)
 
 ## 🚦 Status
