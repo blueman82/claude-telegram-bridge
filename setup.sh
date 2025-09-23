@@ -457,17 +457,8 @@ if ! grep -q "show-telegram" "$SHELL_RC" 2>/dev/null; then
     echo "alias telegram-stop='pkill -f telegram_listener.py'" >> "$SHELL_RC"
     print_success "Aliases added to $SHELL_RC"
 else
-    print_status "Aliases already configured"
+    print_status "Aliases already configured (telegram-start, telegram-stop, telegram-status, show-telegram, show-changes)"
 fi
-
-# Show available aliases
-echo ""
-print_status "Available aliases:"
-echo "  telegram-start    - Start the background listener"
-echo "  telegram-stop     - Stop the listener"
-echo "  telegram-status   - Check if listener is running"
-echo "  show-telegram ID  - View Telegram conversation"
-echo "  show-changes ID   - View git changes for session"
 
 # Configure telegram listener startup
 configure_telegram_startup
