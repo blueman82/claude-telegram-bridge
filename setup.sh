@@ -175,8 +175,8 @@ start_listener_via_app() {
     open "$HOME/Applications/TelegramListener.app"
     sleep 3
 
-    if ps aux | grep -v grep | grep -q telegram_listener_simple.py; then
-        print_success "Telegram listener started via app bundle (PID: $(pgrep -f telegram_listener_simple.py))"
+    if ps aux | grep -v grep | grep -q telegram_listener.py; then
+        print_success "Telegram listener started via app bundle (PID: $(pgrep -f telegram_listener.py))"
         print_success "Auto-start configured - will start automatically on next login"
     else
         print_warning "App bundle created but listener not running. Trying manual start..."
