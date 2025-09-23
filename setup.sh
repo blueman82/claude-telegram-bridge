@@ -67,6 +67,10 @@ cp scripts/show-telegram.py ~/.claude/
 chmod +x ~/.claude/show-telegram.py
 print_success "Show-telegram script installed"
 
+cp scripts/show-changes.py ~/.claude/
+chmod +x ~/.claude/show-changes.py
+print_success "Show-changes script installed"
+
 # Get Telegram Bot Token
 echo ""
 print_status "Telegram Bot Configuration"
