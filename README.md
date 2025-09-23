@@ -83,19 +83,21 @@ Terminal: [Session continues automatically with your question]
 ## 🏗️ Architecture
 
 ```mermaid
-graph LR
-    A[Claude CLI] -->|Triggers on stop| B[Stop Hook]
-    B -->|Sends notification| C[Telegram Bot]
-    C -->|Message with Session ID| D[You on Telegram]
-    D -->|Reply: session_id:message| E[Listener Service]
-    E -->|claude --resume session_id| A
-
-    style A fill:#e1f5e1
-    style B fill:#fff3e0
-    style C fill:#e3f2fd
-    style D fill:#f3e5f5
-    style E fill:#ffe0e0
+graph TD
+    A[Claude CLI] --> B[Stop Hook]
+    B --> C[Telegram Bot]
+    C --> D[Your Phone]
+    D --> E[Listener Service]
+    E --> A
 ```
+
+**Flow:**
+1. Claude CLI finishes → triggers Stop Hook
+2. Stop Hook → sends notification to Telegram Bot
+3. Telegram Bot → delivers message to your phone
+4. You reply with `session_id:message`
+5. Listener Service → picks up reply
+6. Listener → runs `claude --resume` to continue session
 
 
 ### Components
