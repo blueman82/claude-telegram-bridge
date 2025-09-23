@@ -150,6 +150,15 @@ alias telegram-status="ps aux | grep telegram_listener"
    show-telegram abc123
    ```
 
+4. **View Git Changes**: See what code changed during a session:
+   ```bash
+   # File list only
+   show-changes abc123
+
+   # Complete diff
+   show-changes abc123 --full
+   ```
+
 ### Testing Your Setup
 
 1. Start a Claude session:
