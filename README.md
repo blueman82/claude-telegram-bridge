@@ -111,7 +111,7 @@ Later: show-changes abc123 --full  # See complete diff
 ### Components
 
 - **Stop Hook** (`stop.py`): Runs after each Claude response, sends notifications
-- **Listener Service** (`telegram_listener_simple.py`): Monitors for Telegram replies
+- **Listener Service** (`telegram_listener.py`): Monitors for Telegram replies
 - **Show History** (`show-telegram.py`): View conversation history
 
 ## 💡 Usage Examples
