@@ -24,6 +24,10 @@ A seamless 2-way communication system between Claude Code and Telegram, enabling
 Terminal: claude "Help me debug this Python code"
 Telegram: 🤖 Session abc123 - my_project (14:30)
 
+         📂 Recent changes:
+         ✏️ src/app.py (modified)
+         ➕ tests/test_fix.py (added)
+
          I'll help you debug your Python code...
          [Claude's formatted response]
 
@@ -31,6 +35,8 @@ Telegram: 🤖 Session abc123 - my_project (14:30)
 
 You: abc123:what about line 42?
 Terminal: [Session continues automatically with your question]
+
+Later: show-changes abc123 --full  # See complete diff
 ```
 
 ## 🚀 Quick Start
