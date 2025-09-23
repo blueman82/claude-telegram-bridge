@@ -30,6 +30,11 @@
   - Provides clear error messages and manual installation instructions
   - Fixes pip install errors on modern macOS systems with Homebrew Python
   - Complies with PEP 668 externally-managed environment requirements
+- **Shell detection improvements** - Enhanced shell config file detection for proper alias installation
+  - Checks user's actual shell via $SHELL environment variable
+  - Fallback logic checks for existing .zshrc/.bashrc files
+  - Fixes aliases not working when setup detects wrong shell config file
+  - Provides clear feedback showing detected shell config location
 
 ## [1.1.5] - 2025-09-23
 
