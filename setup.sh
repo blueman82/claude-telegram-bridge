@@ -167,7 +167,8 @@ setup_manual_start() {
 
 # Start listener via app bundle
 start_listener_via_app() {
-    # Kill any existing listener
+    # Kill any existing listeners (both old and new filenames)
+    pkill -f telegram_listener_simple.py 2>/dev/null || true
     pkill -f telegram_listener.py 2>/dev/null || true
 
     # Start the app bundle
@@ -186,7 +187,8 @@ start_listener_via_app() {
 
 # Start listener manually
 start_listener_manually() {
-    # Kill any existing listener
+    # Kill any existing listeners (both old and new filenames)
+    pkill -f telegram_listener_simple.py 2>/dev/null || true
     pkill -f telegram_listener.py 2>/dev/null || true
 
     # Start new listener
