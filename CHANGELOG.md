@@ -22,6 +22,10 @@
   - Renamed `telegram_listener_simple.py` to `telegram_listener.py`
   - Updated all references in setup.sh, documentation, and project files
   - Maintains backward compatibility for existing installations
+- **Setup script user experience** - Improved feedback and visibility
+  - Added alias list display during setup completion
+  - Fixed color rendering in final setup message with proper echo -e flag
+  - Enhanced shell detection with better user feedback
 
 ### Fixed
 - **File size compliance** - Refactored setup.sh to stay under 400-line limit
