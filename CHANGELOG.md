@@ -18,6 +18,10 @@
   - Added `start_listener_via_app()` and `start_listener_manually()` functions
   - Improved user experience with clear choice between auto-start and manual modes
   - Fallback logic: app bundle failure gracefully falls back to manual start
+- **Filename simplification** - Cleaned up script naming for better usability
+  - Renamed `telegram_listener_simple.py` to `telegram_listener.py`
+  - Updated all references in setup.sh, documentation, and project files
+  - Maintains backward compatibility for existing installations
 
 ### Fixed
 - **File size compliance** - Refactored setup.sh to stay under 400-line limit
