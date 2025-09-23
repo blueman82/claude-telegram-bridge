@@ -23,9 +23,10 @@
   - Updated all references in setup.sh, documentation, and project files
   - Maintains backward compatibility for existing installations
 - **Setup script user experience** - Improved feedback and visibility
-  - Added alias list display during setup completion
+  - Enhanced "Aliases already configured" message to show which aliases exist
   - Fixed color rendering in final setup message with proper echo -e flag
   - Enhanced shell detection with better user feedback
+  - Removed duplicate alias listing from setup completion
 
 ### Fixed
 - **File size compliance** - Refactored setup.sh to stay under 400-line limit
