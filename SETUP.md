@@ -147,16 +147,22 @@ alias telegram-status="ps aux | grep telegram_listener"
 
 3. **View History**: See what happened in Telegram conversations:
    ```bash
+   # From terminal/bash shell:
    show-telegram abc123
+
+   # From within active Claude Code session:
+   !show-telegram abc123
    ```
 
 4. **View Git Changes**: See what code changed during a session:
    ```bash
-   # File list only
-   show-changes abc123
+   # From terminal/bash shell:
+   show-changes abc123              # File list only
+   show-changes abc123 --full       # Complete diff
 
-   # Complete diff
-   show-changes abc123 --full
+   # From within active Claude Code session:
+   !show-changes abc123             # File list only
+   !show-changes abc123 --full      # Complete diff
    ```
 
 ### Testing Your Setup
