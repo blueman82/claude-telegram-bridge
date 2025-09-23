@@ -250,6 +250,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🚦 Status
 
+![GitHub stars](https://img.shields.io/github/stars/blueman82/claude-telegram-bridge)
+![GitHub forks](https://img.shields.io/github/forks/blueman82/claude-telegram-bridge)
+![GitHub last commit](https://img.shields.io/github/last-commit/blueman82/claude-telegram-bridge)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 ![Tests](https://img.shields.io/badge/tests-13%20passing-green)
 ![Version](https://img.shields.io/badge/version-1.1.0-blue)
