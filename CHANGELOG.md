@@ -9,6 +9,13 @@
   - Sources `~/.claude/.env` and validates required configuration
   - **Note**: Auto-start blocked by macOS security restrictions on user Documents access
 
+### Added (Additional)
+- **Login Items automation test** - TDD approach for verifying auto-start capability
+  - Created `tests/test_login_items.py` with comprehensive macOS Login Items testing
+  - Tests app bundle creation, adding/removing login items, and verification
+  - Enables validation of setup script auto-start integration before implementation
+  - Updated test documentation with new Login Items test coverage
+
 ### Updated
 - **Documentation cleanup** - Removed non-functional auto-start instructions
   - Updated SETUP.md to reflect manual start requirement due to macOS security
