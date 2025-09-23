@@ -113,7 +113,7 @@ The listener needs to run continuously to handle delayed replies:
 nohup python3 ~/.claude/telegram_listener_simple.py > ~/telegram_listener.log 2>&1 &
 
 # Or use screen/tmux for better management
-screen -dmS telegram-listener python3 ~/.claude/telegram_listener_simple.py
+screen -dmS telegram-listener python3 ~/.claude/telegram_listener.py
 ```
 
 ## Step 7: Add Convenience Alias (Optional)
