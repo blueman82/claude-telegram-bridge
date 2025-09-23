@@ -86,6 +86,7 @@ Later: show-changes abc123 --full  # See complete diff
 - [Full Setup Guide](SETUP.md) - Detailed installation and configuration
 - [Troubleshooting](SETUP.md#troubleshooting) - Common issues and solutions
 - [Security Notes](SETUP.md#security-notes) - Best practices
+- [Testing Guide](tests/README.md) - Running tests and contributing
 
 
 ## 🏗️ Architecture
