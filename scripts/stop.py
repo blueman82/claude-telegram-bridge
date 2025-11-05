@@ -394,8 +394,9 @@ def check_for_telegram_reply(target_session_id):
         return None
 
 
-def send_telegram_notification(input_data=None):
+def send_telegram_notification(input_data=None, max_retries=3):
     """Send Telegram notification with session summary and session ID."""
+    log_file = Path.home() / '.claude' / 'telegram_hook.log'
     try:
         # Load environment from Claude directory
         env_file = os.path.expanduser('~/.claude/.env')
@@ -405,11 +406,15 @@ def send_telegram_notification(input_data=None):
 
         api_key = os.getenv('TELEGRAM_API')
         if not api_key:
+            with open(log_file, 'a') as f:
+                f.write(f"[CONFIG_ERROR] TELEGRAM_API not configured\n")
             return
 
         # Get chat ID
         chat_id_file = os.path.expanduser('~/.claude/.chat_id')
         if not os.path.exists(chat_id_file):
+            with open(log_file, 'a') as f:
+                f.write(f"[CONFIG_ERROR] .chat_id file not found\n")
             return
 
         with open(chat_id_file, 'r') as f:
@@ -499,10 +504,62 @@ def send_telegram_notification(input_data=None):
         # Send message with HTML formatting to preserve Claude's markdown
         url = f"https://api.telegram.org/bot{api_key}/sendMessage"
         data = {'chat_id': chat_id, 'text': summary, 'parse_mode': 'HTML'}
-        requests.post(url, json=data, timeout=5)
 
-    except Exception:
-        pass  # Fail silently
+        # Retry logic for more reliable delivery
+        last_error = None
+        for attempt in range(max_retries):
+            try:
+                with open(log_file, 'a') as f:
+                    f.write(f"[SEND] Attempt {attempt + 1}/{max_retries} - Sending to {short_session_id} (chat {chat_id}), msg len: {len(summary)}\n")
+
+                response = requests.post(url, json=data, timeout=15)  # Increased from 5 to 15 seconds
+
+                # Log success/failure
+                with open(log_file, 'a') as f:
+                    if response.status_code == 200:
+                        result = response.json()
+                        if result.get('ok'):
+                            msg_id = result.get('result', {}).get('message_id', '?')
+                            f.write(f"[OK] Session {short_session_id} message sent (ID: {msg_id}) on attempt {attempt + 1}\n")
+                            return  # Success, exit function
+                        else:
+                            error_desc = result.get('description', 'unknown error')
+                            f.write(f"[API_ERROR] {error_desc} for session {short_session_id}\n")
+                            last_error = error_desc
+                            # Retry on API error
+                            if attempt < max_retries - 1:
+                                time.sleep(1 + attempt)  # Exponential backoff: 1s, 2s, 3s
+                                continue
+                    else:
+                        f.write(f"[HTTP_ERROR] {response.status_code} for session {short_session_id}\n")
+                        f.write(f"         Response: {response.text[:200]}\n")
+                        last_error = f"HTTP {response.status_code}"
+                        if attempt < max_retries - 1 and response.status_code >= 500:
+                            time.sleep(1 + attempt)  # Retry on server errors
+                            continue
+            except (requests.Timeout, requests.ConnectionError) as e:
+                with open(log_file, 'a') as f:
+                    f.write(f"[NETWORK_ERROR] {type(e).__name__}: {str(e)} on attempt {attempt + 1}\n")
+                last_error = f"{type(e).__name__}: {str(e)}"
+                if attempt < max_retries - 1:
+                    time.sleep(2 + attempt)  # Longer backoff for network errors
+                    continue
+                break
+            except Exception as e:
+                with open(log_file, 'a') as f:
+                    f.write(f"[EXCEPTION] {type(e).__name__}: {str(e)}\n")
+                last_error = str(e)
+                break
+        
+        # Final failure
+        if last_error:
+            with open(log_file, 'a') as f:
+                f.write(f"[FAILED] Could not send message for session {short_session_id} after {max_retries} attempts: {last_error}\n")
+
+    except Exception as e:
+        # Outer exception handler for config/prep errors
+        with open(log_file, 'a') as f:
+            f.write(f"[EXCEPTION] {type(e).__name__}: {str(e)}\n")
 
 
 def announce_completion():

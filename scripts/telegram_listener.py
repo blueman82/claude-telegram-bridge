@@ -39,8 +39,9 @@ def resume_claude_session(real_session_id, message, cwd):
         prefixed_message = f"User replied via Telegram: {message}"
 
         # Use claude --resume to continue the exact same session
+        # Skip permissions to allow automated background resumption
         subprocess.Popen([
-            'claude', '--resume', real_session_id, prefixed_message
+            'claude', '--resume', real_session_id, '--dangerously-skip-permissions', prefixed_message
         ], cwd=cwd)
         print(f"Resumed Claude session {real_session_id} with: {message}")
         return True

@@ -20,3 +20,6 @@ __pycache__/
 dist/
 build/
 *.egg-info/
+
+# Recallor shadow worktree - prevents commit conflicts during shadow operations
+.recallor/
